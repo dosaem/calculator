@@ -1,62 +1,66 @@
 .calculator {
-    background-color: rgb(216, 190, 190);
-    width: 240px;
-    overflow: auto;
-    box-sizing: border-box;
-    margin : 0px;
-    border : 1px solid gray;
-    position: relative;
+  background-color: rgb(216, 190, 190);
+  width: 240px;
+  overflow: auto;
+  box-sizing: border-box;
+  margin: 0px;
+  border: 1px solid gray;
+  position: relative;
 }
+
 /* 최상단 점3개 */
-
-
 .calculator-dot {
-    left : 5px;
-    background-color : #004f9b;
-    float: left;
-    margin: 0px;
-    position : absolute;
-    
+  left: 5px;
+  background-color: #004f9b;
+  float: left;
+  margin: 0px;
+  position: absolute;
 }
+
 .dot-button {
-	width: 10px;
-	height: 10px;
-	display: inline-block;
-    border-radius: 100%;
-    border: none;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 100%;
+  border: none;
 }
 
-.red    {background-color: #fa5a5a;}
-.yellow {background-color: #f0d264;}
-.green  {background-color: #82c8a0;}
+.red {
+  background-color: #fa5a5a;
+}
 
+.yellow {
+  background-color: #f0d264;
+}
+
+.green {
+  background-color: #82c8a0;
+}
 
 /* 숫자 입력창 */
 .calculator-input.value {
-    width : 238px;
-    height : 40px;
-    background-color : #004f9b;
-    font-size: 30px;
-    color : white;
-    text-align: right;
-    padding-top: 10px;
+  width: 238px;
+  height: 40px;
+  background-color: #004f9b;
+  font-size: 30px;
+  color: white;
+  text-align: right;
+  padding-top: 10px;
 }
 
 /* 계산기 버튼 */
 .calculator-button > * {
-    width : 59.5px;
-    height : 40px;
-    margin : 0px;
-    padding: 4px;
-    background-color:#c8c8c8;
-    border: 1px solid gray;
-    float: left;
-    font-size: 20px;
-    text-align: center;
+  width: 59.5px;
+  height: 40px;
+  margin: 0px;
+  padding: 4px;
+  background-color: #c8c8c8;
+  border: 1px solid gray;
+  float: left;
+  font-size: 20px;
+  text-align: center;
 }
 
 .calculator-button > .big {
-    width : 119px;
+  width: 119px;
 }
-
-

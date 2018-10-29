@@ -1,9 +1,7 @@
 .calculator {
-  background-color: rgb(216, 190, 190);
   width: 240px;
   overflow: auto;
   box-sizing: border-box;
-  margin: 0px;
   border: 1px solid gray;
 }
 
@@ -14,16 +12,12 @@
 /* 최상단 점3개 */
 .calculator-dot {
   left: 5px;
-  background-color: #004f9b;
-  float: left;
-  margin: 0px;
   position: absolute;
 }
 
 .dot-button {
   width: 10px;
   height: 10px;
-  display: inline-block;
   border-radius: 100%;
   border: none;
 }
@@ -42,13 +36,11 @@
 
 /* 숫자 입력창 */
 .calculator-input.value {
-  width: 238px;
   height: 40px;
   background-color: #004f9b;
   font-size: 30px;
   color: white;
   text-align: right;
-  padding-top: 10px;
 }
 
 /* 계산기 버튼 */

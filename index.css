@@ -50,14 +50,26 @@
     margin : 0px;
     padding: 4px;
     background-color:#c8c8c8;
+    padding: 0px;
+    border: none;
+    background-color:#e5e7e5;
     outline: 1px solid gray;
     float: left;
     font-size: 20px;
     text-align: center;
 }
+.calculator-button > *:nth-child(n):hover {
+    background-color: slategrey;
+ }
+
 
 .calculator-button > .big {
+    padding-left: 25px;
+    text-align: left;
     width : 119px;
 }
 
-
+.calculator-button > .yellow {
+    background-color: #ffa300;
+    color : white;
+}

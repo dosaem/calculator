@@ -48,7 +48,7 @@ button {
 /* 최상단 점3개 */
 .calculator-dot {
     left : 5px;
-    background-color : #004f9b;
+    background-color : #304c6d;
     float: left;
     margin: 0px;
     position : absolute;
@@ -61,15 +61,15 @@ button {
     border: none;
 }
 
-.red    {background-color: #fa5a5a;}
-.yellow {background-color: #f0d264;}
-.green  {background-color: #82c8a0;}
+.red    {background-color: #ff554e;}
+.yellow {background-color: #ffbd2e;}
+.green  {background-color: #27c93f;}
 
 /* 숫자 입력창 */
 .calculator-input.value {
     width : 228px;
     height : 50px;
-    background-color : #004f9b;
+    background-color : #304c6d;
     font-size: 30px;
     color : white;
     text-align: right;
@@ -82,9 +82,8 @@ button {
     width : 59.5px;
     height : 40px;
     margin : 0px;
-    background-color:#c8c8c8;
+    background-color:#e0e0e0;
     border: none;
-    background-color:#e5e7e5;
     outline: 1px solid gray;
     float: left;
     font-size: 20px;
@@ -102,6 +101,6 @@ button {
 }
 
 .calculator-button > .yellow {
-    background-color: #ffa300;
+    background-color: #f79231;
     color : white;
 }

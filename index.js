@@ -1,12 +1,11 @@
-var i = 0;
-var ivArray = new Array();
-
-function input_display(char) { 
-  ivArray[i] = char;
-  console.log[ivArray[i]];
-  i++;
-  var iv = document.getElementById("ivalue");
-  iv.innerHTML = ivArray.join("");
-
-  console.log(iv);  
+var cols = document.querySelectorAll('div.calculator-button > button'); 
+ 
+[].forEach.call(cols ,function(col){
+    col.addEventListener("click",click,false);
+});
+ 
+function click(e){
+  document.getElementById("ivalue").innerHTML = this.innerHTML;
 }
+
+

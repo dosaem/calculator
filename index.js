@@ -4,8 +4,12 @@ window.onload = function() {
 [].forEach.call(cols ,function(col){
     col.addEventListener("click",click,false);
 });
- 
+
+
+var str2 = "";
 function click(e){
-  document.getElementById("ivalue").innerHTML = this.innerHTML;
+  var str = this.innerHTML;
+  str2 = str2.concat(str);
+  document.getElementById("ivalue").innerHTML = str2;
 }
 }

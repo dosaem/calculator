@@ -1,7 +1,7 @@
-window.onload = function() {
+window.addEventListener('DOMContentLoaded', function() {
   var cols = document.querySelectorAll('div.calculator-button > button'); 
  
-[].forEach.call(cols ,function(col){
+  Array.prototype.forEach.call(cols ,function(col){
     col.addEventListener("click",click,false);
 });
 
@@ -11,7 +11,7 @@ var num = 0;
 var sum = 0;
 function click(e){
   var str = this.innerHTML;
-  str2 = str2.concat(str);
+  str2 += this.innerHTML;
   document.getElementById("ivalue").innerHTML = str2;
 
   if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
@@ -26,4 +26,4 @@ function click(e){
     document.getElementById("ivalue").innerHTML = sum;
   }
 }
-}
+})

@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 var str2 = "";
+var stnum = "";
 var num = 0;
 var sum = 0;
 function click(e){
@@ -15,10 +16,14 @@ function click(e){
   document.getElementById("ivalue").innerHTML = str2;
 
   if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
-    num = Number(str);
+    stnum += str;
+    num = Number(stnum);
+    console.log(stnum);
+    console.log(str);
   }
   else if(str.charCodeAt() == 43) {
     sum = sum + num;
+    stnum = 0;
     console.log(sum);
   }
   else if(str.charCodeAt() == 61) {

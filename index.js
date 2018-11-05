@@ -13,8 +13,8 @@ var sum = 0;
 function click(e){
   var str = this.innerHTML;
   str2 += this.innerHTML;
-  document.getElementById("ivalue").innerHTML = str2;
-
+  getIvalue(e).innerHTML = str2;
+  console.log(typeof(str));
   if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
     stnum += str;
     num = Number(stnum);
@@ -28,7 +28,22 @@ function click(e){
   }
   else if(str.charCodeAt() == 61) {
     sum = sum + num;
-    document.getElementById("ivalue").innerHTML = sum;
+    getIvalue(e).innerHTML = sum;
+  }
+  else if(str == "AC") {
+    getIvalue(e).innerHTML = 0;
+    str = 0;
+    str2 = "";
+    num = 0;
+    sum = 0;
+    stnum = 0;
   }
 }
-})
+
+function getIvalue(e) {
+  var IV = document.getElementById("ivalue");
+  return IV;
+}
+
+}
+)

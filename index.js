@@ -43,8 +43,7 @@ function click(e){
 }
 
 function getIvalue(e) {
-  var IV = document.getElementById("ivalue");
-  return IV;
+  return document.getElementById("ivalue");
 }
 
 }

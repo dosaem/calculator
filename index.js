@@ -12,8 +12,10 @@ var num = 0;
 var sum = 0;
 function click(e){
   var str = this.innerHTML;
+  var IV = getIvalue(e);
   str2 += this.innerHTML;
-  getIvalue(e).innerHTML = str2;
+  IV.innerHTML = str2;
+  
   console.log(typeof(str));
   if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
     stnum += str;
@@ -28,10 +30,10 @@ function click(e){
   }
   else if(str.charCodeAt() == 61) {
     sum = sum + num;
-    getIvalue(e).innerHTML = sum;
+    IV.innerHTML = sum;
   }
   else if(str == "AC") {
-    getIvalue(e).innerHTML = 0;
+    IV.innerHTML = 0;
     str = 0;
     str2 = "";
     num = 0;

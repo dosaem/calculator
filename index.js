@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', function() {
     col.addEventListener("click",click,false);
 });
 
-
+var str ="";
 var str2 = "";
 var stnum = "";
 var preBt = "";
@@ -16,15 +16,25 @@ var result = 0;
 var iv = document.getElementById("ivalue");
 
 function click(e){
-  var str = this.innerHTML;
-  str2 += this.innerHTML;
-  iv.innerHTML = str2;
+  // 화면표시부
+  if(preBt.charCodeAt() == 61) {
+    str = this.innerHTML;
+    str2 = String(result) +str;
+    iv.innerHTML = str2;
+    preBt = "";
+  }
+  else {
+    str = this.innerHTML;
+    str2 += this.innerHTML;
+    iv.innerHTML = str2;
+  }
 
   // 숫자
   if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
-    stnum += str;
-    num = Number(stnum);
+      stnum += str;
+      num = Number(stnum);
   }
+
   // 더하기
   else if(str.charCodeAt() == 43) {
     preBt = str;
@@ -47,11 +57,13 @@ function click(e){
     else if(preBt.charCodeAt() == 42) {
       result = multi * num;
     }
-    iv.innerHTML = result;
+    iv.innerHTML = result
+    preBt = "=";
   }
 
   // AC, 올클리어
   else if(str == "AC") {
+    preBt = str;
     iv.innerHTML = 0;
     str = 0;
     str2 = "";

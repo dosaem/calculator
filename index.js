@@ -13,12 +13,12 @@ var num = 0;
 var sum = 0;
 var multi = 1;
 var result = 0;
-var iV = getIvalue();
+var iv = document.getElementById("ivalue");
 
 function click(e){
   var str = this.innerHTML;
   str2 += this.innerHTML;
-  iV.innerHTML = str2;
+  iv.innerHTML = str2;
 
   // 숫자
   if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
@@ -47,12 +47,12 @@ function click(e){
     else if(preBt.charCodeAt() == 42) {
       result = multi * num;
     }
-    iV.innerHTML = result;
+    iv.innerHTML = result;
   }
 
   // AC, 올클리어
   else if(str == "AC") {
-    iV.innerHTML = 0;
+    iv.innerHTML = 0;
     str = 0;
     str2 = "";
     num = 0;
@@ -61,10 +61,6 @@ function click(e){
     multi = 1;
     result = 0;
   }
-}
-
-function getIvalue(e) {
-  return document.getElementById("ivalue");
 }
 }
 )

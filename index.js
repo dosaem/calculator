@@ -5,74 +5,12 @@ window.addEventListener('DOMContentLoaded', function() {
     col.addEventListener("click",click,false);
 });
 
-var str ="";
-var str2 = "";
-var stnum = "";
-var preBt = "";
-var num = 0;
-var sum = 0;
-var multi = 1;
-var result = 0;
 var iv = document.getElementById("ivalue");
 
 function click(e){
   // 화면표시부
-  if(preBt.charCodeAt() == 61) {
-    str = this.innerHTML;
-    str2 = String(result) +str;
-    iv.innerHTML = str2;
-    preBt = "";
-  }
-  else {
-    str = this.innerHTML;
-    str2 += this.innerHTML;
-    iv.innerHTML = str2;
-  }
-
-  // 숫자
-  if(str.charCodeAt() > 47 && str.charCodeAt() < 58) {
-      stnum += str;
-      num = Number(stnum);
-  }
-
-  // 더하기
-  else if(str.charCodeAt() == 43) {
-    preBt = str;
-    sum = sum + num;
-    stnum = 0;
-  }
-
-  // 곱하기
-  else if(str.charCodeAt() == 42) {
-    preBt = str;
-    multi = multi * num;
-    stnum = 0;
-  }
-
-  // 등호
-  else if(str.charCodeAt() == 61) {
-    if(preBt.charCodeAt() == 43) {
-      result = sum + num;
-    }
-    else if(preBt.charCodeAt() == 42) {
-      result = multi * num;
-    }
-    iv.innerHTML = result
-    preBt = "=";
-  }
-
-  // AC, 올클리어
-  else if(str == "AC") {
-    preBt = str;
-    iv.innerHTML = 0;
-    str = 0;
-    str2 = "";
-    num = 0;
-    sum = 0;
-    stnum = 0;
-    multi = 1;
-    result = 0;
-  }
+  var str = this.innerHTML;
+  iv.innerHTML = str;
 }
 }
 )

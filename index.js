@@ -1,17 +1,17 @@
 window.addEventListener("DOMContentLoaded", function() {
-  var calculator = {
-    numbers: [0],
-    operators: [],
-    _getLastNumber: function() {
-      return this.numbers[this.numbers.length - 1];
-    },
-    _getLastOperator: function() {
-      return this.operators[this.operators.length - 1];
-    },
-    _concatNumber: function(num, str) {
+  var calculator = (function() {
+    var numbers = [0];
+    var operators = [];
+
+    function _getLastOperator() {
+      return operators[operators.length - 1];
+    }
+
+    function _concatNumber(num, str) {
       return parseInt(String(num) + str, 10);
-    },
-    _calculate: function(operator, right, left) {
+    }
+
+    function _calculate(operator, right, left) {
       switch (operator) {
         case "add":
           return left + right;
@@ -22,115 +22,90 @@ window.addEventListener("DOMContentLoaded", function() {
         case "divide":
           return left / right;
       }
-    },
-    _handleLowerPriorityOperator: function() {
-      var numberCount = this.numbers.length;
-      var operatorCount = this.operators.length;
-
-      if (numberCount === operatorCount) {
-        this.operators.pop();
-      } else if (operatorCount && numberCount > operatorCount) {
-        this.numbers.push(
-          this._calculate(
-            this.operators.pop(),
-            this.numbers.pop(),
-            this.numbers.pop()
-          )
-        );
-      } else {
-        console.log(this.numbers, this.operators);
-      }
-
-      return this;
-    },
-    _isHigherPriorityOperator: function() {
-      var op = this._getLastOperator();
-      return op === "multiply" || op === "divide";
-    },
-    _handleHigherPriorityOperator: function() {
-      var numberCount = this.numbers.length;
-      var operatorCount = this.operators.length;
-
-      if (numberCount === operatorCount) {
-        this.operators.pop();
-      } else if (
-        operatorCount &&
-        numberCount > operatorCount &&
-        this._isHigherPriorityOperator()
-      ) {
-        this.numbers.push(
-          this._calculate(
-            this.operators.pop(),
-            this.numbers.pop(),
-            this.numbers.pop()
-          )
-        );
-      } else {
-        console.log(this.numbers, this.operators);
-      }
-
-      return this;
-    },
-    inputValue: function(input) {
-      if (this.numbers.length === this.operators.length) {
-        this.numbers.push(parseInt(input, 10));
-      } else {
-        this.numbers.push(this._concatNumber(this.numbers.pop(), input));
-      }
-
-      return this;
-    },
-    clear: function() {
-      this.numbers = [0];
-      this.operators = [];
-      return this;
-    },
-    toggleSign: function() {
-      this.numbers.push(this.numbers.pop() * -1);
-      return this;
-    },
-    percent: function() {
-      this.numbers.push(this.numbers.pop() / 100);
-      return this;
-    },
-    add: function() {
-      this._handleLowerPriorityOperator();
-      this.operators.push("add");
-      return this;
-    },
-    substract: function() {
-      this._handleLowerPriorityOperator();
-      this.operators.push("substract");
-      return this;
-    },
-    multiply: function() {
-      this._handleHigherPriorityOperator();
-      this.operators.push("multiply");
-      return this;
-    },
-    divide: function() {
-      this._handleHigherPriorityOperator();
-      this.operators.push("divide");
-      return this;
-    },
-    enter: function _enter() {
-      if (this.operators.length === 0) return this;
-
-      if (this.operators.length === this.numbers.length) {
-        this.operators.pop();
-      } else {
-        this.numbers.push(
-          this._calculate(
-            this.operators.pop(),
-            this.numbers.pop(),
-            this.numbers.pop()
-          )
-        );
-      }
-
-      _enter.call(this);
     }
-  };
+
+    function _disposeOperator(cond) {
+      var numberCount = numbers.length;
+      var operatorCount = operators.length;
+
+      if (numberCount === operatorCount) {
+        operators.pop();
+      } else if (operatorCount && numberCount > operatorCount && cond()) {
+        numbers.push(_calculate(operators.pop(), numbers.pop(), numbers.pop()));
+      } else if (operatorCount !== 0) {
+        throw "error~";
+      }
+    }
+
+    function _isHigherPriorityOperator() {
+      var op = _getLastOperator();
+      return op === "multiply" || op === "divide";
+    }
+
+    return {
+      inputValue: function(input) {
+        if (numbers.length === operators.length) {
+          numbers.push(parseInt(input, 10));
+        } else {
+          numbers.push(_concatNumber(numbers.pop(), input));
+        }
+        return this;
+      },
+      clear: function() {
+        numbers = [0];
+        operators = [];
+        return this;
+      },
+      toggleSign: function() {
+        numbers.push(numbers.pop() * -1);
+        return this;
+      },
+      percent: function() {
+        numbers.push(numbers.pop() / 100);
+        return this;
+      },
+      add: function() {
+        _disposeOperator(function() {
+          return true;
+        });
+        operators.push("add");
+        return this;
+      },
+      substract: function() {
+        _disposeOperator(function() {
+          return true;
+        });
+        operators.push("substract");
+        return this;
+      },
+      multiply: function() {
+        _disposeOperator(_isHigherPriorityOperator);
+        operators.push("multiply");
+        return this;
+      },
+      divide: function() {
+        _disposeOperator(_isHigherPriorityOperator);
+        operators.push("divide");
+        return this;
+      },
+      enter: function _enter() {
+        if (operators.length === 0) return this;
+
+        if (operators.length === numbers.length) {
+          operators.pop();
+        } else {
+          numbers.push(
+            _calculate(operators.pop(), numbers.pop(), numbers.pop())
+          );
+        }
+
+        _enter.call(this);
+      },
+      getNumber: function() {
+        return numbers[numbers.length - 1];
+      }
+    };
+  })();
 
   var $view = document.getElementById("ivalue");
 
@@ -142,7 +117,7 @@ window.addEventListener("DOMContentLoaded", function() {
       calculator.inputValue(this.innerHTML);
     }
 
-    $view.innerHTML = calculator._getLastNumber();
+    $view.innerHTML = calculator.getNumber();
   }
 
   Array.prototype.forEach.call(

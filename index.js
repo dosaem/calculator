@@ -8,7 +8,8 @@ window.addEventListener('DOMContentLoaded', function() {
 var iv = document.getElementById("ivalue");
 var stringNum = "";
 var preButton ="";
-var preButtonCount = 0;
+var plusButtonCount = 0;
+var multiButtonCount = 0;
 var sum = 0;
 
 function click(e){
@@ -27,16 +28,43 @@ function click(e){
     }
   }
 
+  // 더하기
   else if(inputValue == "+") {
-    preButtonCount++;
+    plusButtonCount++;
     preButton = inputValue;
     stringNum = "";
-    if(preButtonCount == 1) {
+    if(plusButtonCount == 1) {
       sum += num;
     }
-    if(preButtonCount > 1) {
+    else if(plusButtonCount > 1) {
       iv.innerHTML = sum;
     }
+  }
+
+  // 곱하기
+  // else if(inputValue == "*") {
+  //   multiButtonCount++;
+
+
+  // }
+
+  // = 버튼
+  else if(inputValue == "=") {
+    if(preButton == "+") {
+      iv.innerHTML = sum;
+      preButton = "";
+      plusButtonCount = 0;
+      num = 0;
+    }
+
+  }
+  // AC 올클리어
+  else if(inputValue == "AC") {
+    stringNum = "";
+    preButton ="";
+    plusButtonCount = 0;
+    sum = 0;
+    iv.innerHTML = 0;
   }
 
 

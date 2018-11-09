@@ -1,55 +1,46 @@
-<!DDCTYPE html>
+<!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>calculator</title>
     <link rel="stylesheet" type="text/css" href="index.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <script type="text/javascript" src="index.js"></script>
 
     <div class="calculator">
-        <!-- 최상단 점3개 -->
-        <div class="display-pane">
-            <div class="calculator-dot">
-                <button class="dot-button red"></button>        
-                <button class="dot-button yellow"></button>        
-                <button class="dot-button green"></button>   
-            </div>
-        
+      <!-- 최상단 점3개 -->
+      <div class="display-pane">
+        <div class="calculator-dot">
+          <button class="dot-button red"></button>
+          <button class="dot-button yellow"></button>
+          <button class="dot-button green"></button>
+        </div>
+
         <!-- 숫자 입력창 -->
-            <div id = "ivalue" class="calculator-input value">0</div>
-        </div>
-        
+        <div id="ivalue" class="calculator-input value">0</div>
+      </div>
 
-        <!-- 계산기 버튼 -->
-        <div id = "ibutton" class="calculator-button">
-            <button data-operator="clear">AC</button>
-            <button data-operator="toggleSign">+/-</button>
-            <button data-operator="percent">%</button>
-            <button data-operator="divide" class="yellow">/</button>
+      <!-- 계산기 버튼 -->
+      <div id="ibutton" class="calculator-button">
+        <button data-operator="clear">AC</button>
+        <button data-operator="toggleSign">+/-</button>
+        <button data-operator="percent">%</button>
+        <button data-operator="divide" class="yellow">/</button>
 
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button data-operator="multiply" class="yellow">*</button>
+        <button>7</button> <button>8</button> <button>9</button>
+        <button data-operator="multiply" class="yellow">*</button>
 
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button data-operator="substract" class="yellow">-</button>
+        <button>4</button> <button>5</button> <button>6</button>
+        <button data-operator="substract" class="yellow">-</button>
 
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button data-operator="add" class="yellow">+</button>
+        <button>1</button> <button>2</button> <button>3</button>
+        <button data-operator="add" class="yellow">+</button>
 
-            <button class="big">0</button>
-            <button data-operator="dot">.</button>
-            <button data-operator="enter" class="yellow">=</button>
-        </div>
+        <button class="big">0</button> <button data-operator="dot">.</button>
+        <button data-operator="enter" class="yellow">=</button>
+      </div>
     </div>
-</body>
+  </body>
 </html>

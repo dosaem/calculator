@@ -7,29 +7,24 @@ window.addEventListener('DOMContentLoaded', function() {
 
 var iv = document.getElementById("ivalue");
 var stringNum = "";
-var inputValue = "";
 var num = [];
-var numCount = 0;
 var oper = [];
-var operCount = 0;
 
 
-function inputNumber() {
+function inputNumber(inputValue) {
     stringNum += inputValue;
-    num[operCount] = Number(stringNum);
-    iv.innerHTML = num[operCount];
-    numCount++;
+    num.push(Number(stringNum));
+    iv.innerHTML = num[num.length - 1];
     console.log(num[0]);
     console.log(num[1]);
     console.log(num[2]);
   }
 
-function inputOper() {
-  operCount++;
+function inputOper(inputValue) {
   stringNum = "";
-  oper[operCount] = inputValue;
+  oper.push(inputValue);
+  console.log(oper[0]);
   console.log(oper[1]);
-  console.log(oper[2]);
 }
 
 function saemOper() {
@@ -37,29 +32,29 @@ function saemOper() {
     case "+" :
       num[0] += num[1];
       iv.innerHTML = num[0];
-      operCount--;
-      numCount--;
+      oper.pop();
+      num.pop();
       break;
     case "*" :
       num[0] *= num[1];
       iv.innerHTML = num[0];
-      operCount--;
-      numCount--;
+      oper.pop();
+      num.pop();
       break;
   }
 }
 
 function diffOper() {
-  if(oper[1] == "+") {
-    switch (oper[2]) {
+  if(oper[0] == "+") {
+    switch (oper[1]) {
       case "*" :
       num[1] *= num[2];
       console.log(num[1]);
       num[0] += num[1];
       console.log(num[0]);
       iv.innerHTML = num[0];
-      operCount--;
-      numCount--;
+      oper.pop();
+      num.pop();
     }
   }   
   
@@ -67,20 +62,17 @@ function diffOper() {
 
 function click(e){
   // 입력 받은 버튼 값
-  inputValue = this.innerHTML;
+  var inputValue = this.innerHTML;
 
-  // 숫자
+  // 숫자받기 및 연산
   if(inputValue >= "0" && inputValue <= "9" || inputValue == ".") {
      inputNumber(inputValue);
-     if(operCount == 2 && oper[1] != oper[2] && numCount == 3) {
-      diffOper();
-    } 
   }
 
-  // 숫자이외
+  // 숫자이외 받기 및 출력
   else {
     inputOper(inputValue);
-    if(operCount == 2 && oper[1] == oper[2] && numCount == 2) {
+    if(oper.length == 1 && oper[1] == oper[2] && num.length == 1) {
       saemOper();
     }
   }

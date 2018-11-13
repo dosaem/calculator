@@ -8,74 +8,161 @@ window.addEventListener('DOMContentLoaded', function() {
 var iv = document.getElementById("ivalue");
 var stringNum = "";
 var num = [];
+var numIndex = 0;
 var oper = [];
 
 
 function inputNumber(inputValue) {
     stringNum += inputValue;
-    num.push(Number(stringNum));
-    iv.innerHTML = num[num.length - 1];
-    console.log(num[0]);
-    console.log(num[1]);
-    console.log(num[2]);
+    num[numIndex] = Number(stringNum);
+    iv.innerHTML = num[numIndex];
   }
 
 function inputOper(inputValue) {
+  numIndex++;
   stringNum = "";
   oper.push(inputValue);
-  console.log(oper[0]);
-  console.log(oper[1]);
 }
 
-function saemOper() {
-  switch (oper[1]) {
-    case "+" :
-      num[0] += num[1];
-      iv.innerHTML = num[0];
-      oper.pop();
-      num.pop();
-      break;
-    case "*" :
-      num[0] *= num[1];
-      iv.innerHTML = num[0];
-      oper.pop();
-      num.pop();
-      break;
-  }
+function init() {
+  console.log(num);
+  console.log(oper);
+  iv.innerHTML = num[0];
+  oper.pop();
+  num.pop();
+  // numIndex--;
+  console.log(num);
+  console.log(oper);
 }
 
-function diffOper() {
-  if(oper[0] == "+") {
-    switch (oper[1]) {
-      case "*" :
-      num[1] *= num[2];
-      console.log(num[1]);
+
+
+function operlator() {
+    if(oper[0] == "+" && oper[1] == "+"){
       num[0] += num[1];
-      console.log(num[0]);
-      iv.innerHTML = num[0];
-      oper.pop();
-      num.pop();
+      init();
     }
-  }   
-  
-}
+    else if(oper[0] == "+" && oper[1] == "-") {
+      num[0] += num[1];
+      oper[0] = oper[1];
+      init();
+    }
+    else if(oper[0] == "-" && oper[1] == "+") {
+      num[0] -= num[1];
+      oper[0] = oper[1];
+      init();
+    }
+    else if(oper[0] == "-" &&oper[1] == "-") {
+      num[0] -= num[1];
+      init();
+    }
+    else if(oper[0] == "*") {
+      num[0] *= num[1];
+      oper[0] = oper[1];
+      init();
+    }
+    else if(oper[0] == "/") {
+      num[0] /= num[1];
+      oper[0] = oper[1];
+      init();
+    }
+    if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3){
+      num[1] *= num[2];
+      iv.innerHTML = num[2];
+      oper[1] = oper[2];
+      console.log("Error");
+      init();
+      if(oper[1] == "+" || oper[1] == "-") {
+        operlator();       
+      }
+      else if(oper[1] == "*" || oper[1] == "/") {
+        iv.innerHTML = num[1];
+      }
+    }
+    else if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3) {
+      num[1] /= num[2];
+      iv.innerHTML = num[2];
+      oper[1] = oper[2];
+      init();
+      if(oper[1] == "+" || oper[1] == "-") {
+        operlator();       
+      }
+      else if(oper[1] == "*" || oper[1] == "/") {
+        iv.innerHTML = num[1];
+      }
+    }
+  }
+
+  function initAc() {
+      stringNum = "";
+      num = [];
+      numIndex = 0;
+      oper = [];
+      iv.innerHTML = 0;
+      console.log(oper);
+      console.log(num);
+
+  }
+
+
+
 
 function click(e){
   // 입력 받은 버튼 값
   var inputValue = this.innerHTML;
 
-  // 숫자받기 및 연산
+  // 숫자받기
   if(inputValue >= "0" && inputValue <= "9" || inputValue == ".") {
+    console.log(num);
      inputNumber(inputValue);
+     console.log("hi");
+     console.log(num);
   }
 
-  // 숫자이외 받기 및 출력
+  // 숫자이외
   else {
     inputOper(inputValue);
-    if(oper.length == 1 && oper[1] == oper[2] && num.length == 1) {
-      saemOper();
+    console.log(oper.length);
+    console.log(oper);
+    if(inputValue == "AC") {
+      initAc();
+    }
+    if(oper.length == 2 || oper.length == 3 ) {
+      operlator();
+    }
+    }
+    if(inputValue == "=") {
+      switch(oper[0]) {
+        case "+" :
+        var initV = num[0] + num[1];
+        initAc();
+        num[0] = initV;
+        iv.innerHTML = num[0];
+        console.log(num);
+        break;
+        case "-" :
+        var initV = num[0] - num[1];
+        initAc();
+        num[0] = initV;
+        iv.innerHTML = num[0];
+        console.log(num);
+        break;
+        case "*" :
+        var initV = num[0] * num[1];
+        initAc();
+        num[0] = initV;
+        iv.innerHTML = num[0];
+        console.log(num);
+        break;
+        case "/" :
+        var initV = num[0] / num[1];
+        initAc();
+        num[0] = initV;
+        iv.innerHTML = num[0];
+        console.log(num);
+        break;
+      }
     }
   }
-}
 }
 )

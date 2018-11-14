@@ -13,13 +13,16 @@ var oper = [];
 
 
 function inputNumber(inputValue) {
+  if(num.length == oper.length) {
     stringNum += inputValue;
-    num[numIndex] = Number(stringNum);
-    iv.innerHTML = num[numIndex];
+    num.push(Number(stringNum));
+    var numLength = num.length;
+    iv.innerHTML = num[numLength-1];
+  }    
   }
 
 function inputOper(inputValue) {
-  numIndex++;
+  // numIndex++;
   stringNum = "";
   oper.push(inputValue);
 }
@@ -30,7 +33,6 @@ function init() {
   iv.innerHTML = num[0];
   oper.pop();
   num.pop();
-  // numIndex--;
   console.log(num);
   console.log(oper);
 }
@@ -78,8 +80,11 @@ function operlator() {
       else if(oper[1] == "*" || oper[1] == "/") {
         iv.innerHTML = num[1];
       }
+      else if(oper[1] == "=") {
+        equlOper();      
+      }
     }
-    else if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3) {
+    else if((oper[0] == "+" || oper[0] == "-") && oper[1] == "/" && oper.length == 3) {
       num[1] /= num[2];
       iv.innerHTML = num[2];
       oper[1] = oper[2];
@@ -90,18 +95,54 @@ function operlator() {
       else if(oper[1] == "*" || oper[1] == "/") {
         iv.innerHTML = num[1];
       }
+      else if(oper[1] == "=") {
+        equlOper();      
+      }
     }
   }
 
   function initAc() {
       stringNum = "";
       num = [];
-      numIndex = 0;
+      // numIndex = 0;
       oper = [];
       iv.innerHTML = 0;
       console.log(oper);
       console.log(num);
 
+  }
+
+  function equlOper() {
+    switch(oper[0]) {
+      case "+" :
+      var initV = num[0] + num[1];
+      initAc();
+      num[0] = initV;
+      iv.innerHTML = num[0];
+      console.log(num);
+      break;
+      case "-" :
+      var initV = num[0] - num[1];
+      initAc();
+      num[0] = initV;
+      iv.innerHTML = num[0];
+      console.log(num);
+      break;
+      case "*" :
+      var initV = num[0] * num[1];
+      initAc();
+      num[0] = initV;
+      iv.innerHTML = num[0];
+      console.log(num);
+      break;
+      case "/" :
+      var initV = num[0] / num[1];
+      initAc();
+      num[0] = initV;
+      iv.innerHTML = num[0];
+      console.log(num);
+      break;
+    }
   }
 
 
@@ -127,42 +168,11 @@ function click(e){
     if(inputValue == "AC") {
       initAc();
     }
-    if(oper.length == 2 || oper.length == 3 ) {
+      if(oper.length == 2 && inputValue == "=") {
+        equlOper();
+      }
       operlator();
     }
-    }
-    if(inputValue == "=") {
-      switch(oper[0]) {
-        case "+" :
-        var initV = num[0] + num[1];
-        initAc();
-        num[0] = initV;
-        iv.innerHTML = num[0];
-        console.log(num);
-        break;
-        case "-" :
-        var initV = num[0] - num[1];
-        initAc();
-        num[0] = initV;
-        iv.innerHTML = num[0];
-        console.log(num);
-        break;
-        case "*" :
-        var initV = num[0] * num[1];
-        initAc();
-        num[0] = initV;
-        iv.innerHTML = num[0];
-        console.log(num);
-        break;
-        case "/" :
-        var initV = num[0] / num[1];
-        initAc();
-        num[0] = initV;
-        iv.innerHTML = num[0];
-        console.log(num);
-        break;
-      }
-    }
+    } 
   }
-}
 )

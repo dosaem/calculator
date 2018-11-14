@@ -9,7 +9,7 @@ var iv = document.getElementById("ivalue");
 var stringNum = "";
 var numArray = [];
 var oper = [];
-
+var num = 0;
 
 function inputNumber(inputValue) {
   stringNum += inputValue;
@@ -27,8 +27,6 @@ function init() {
   oper.pop();
   numArray.pop();
 }
-
-
 
 function operlator() {
     if(oper[0] == "+" && oper[1] == "+"){
@@ -59,6 +57,7 @@ function operlator() {
       oper[0] = oper[1];
       init();
     }
+
     if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3){
       numArray[1] *= numArray[2];
       iv.innerHTML = numArray[2];
@@ -132,13 +131,43 @@ function click(e){
     inputNumber(inputValue);
   }
 
+  else if(inputValue == "-" && numArray.length == 0) {
+    numArray[0] = num;
+    oper[0] = "-";
+    console.log(numArray);
+    console.log(oper);
+  }
+
   // 숫자이외
   else {
-    console.log(num);
     numArray.push(num);
     inputOper(inputValue);
+    console.log(numArray);
+    console.log(oper);
     if(inputValue == "AC") {
       initAc();
+      num = 0;
+    }
+    else if(inputValue == "+/-") {
+      if(num < 0) {
+        num = Math.abs(num);
+        iv.innerHTML = num;
+        oper.shift();
+        numArray.shift(); 
+      }
+      else {
+        num *= -1;
+        iv.innerHTML = num;
+        oper.shift();
+        numArray.shift(); 
+      }
+    }
+    else if(inputValue == "%") {
+        num /= 100;
+        iv.innerHTML = num;
+        oper.shift();
+        numArray.shift(); 
+
     }
     else if(oper.length == 2 && inputValue == "=") {
       equlOper();
@@ -146,7 +175,10 @@ function click(e){
     else if(oper.length == 2 && inputValue != "="){
       operlator();
     }
+    else if(oper.length == 3) {
+      operlator();
     }
-  } 
+    }
+    } 
   }
 )

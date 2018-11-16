@@ -9,54 +9,49 @@ var numArray = [0];
 var oper = [];
 
 function inputNumber(inputValue) {
-  
   numArray[oper.length] = Number(String(numArray.pop()) + inputValue);
   return numArray[oper.length];
 }
 
-// function inputOper(inputValue) {
-//   stringNum = "";
-//   oper.push(inputValue);
-// }
+function inputOper(inputValue) {
+    oper.push(inputValue);
+}
 
-// function init() {
-//   iv.innerHTML = numArray[0];
-//   oper.pop();
-//   numArray.pop();
-// }
+function init() {
+  oper[0] = oper[1];
+  iv.innerHTML = numArray[0];
+  oper.pop();
+  numArray.pop();
+}
 
-// function operlator() {
-//     if(oper[0] == "+" && oper[1] == "+"){
-//       numArray[0] += numArray[1];
-//       oper[0] = oper[1];
-//       init();
-//     }
-//     else if(oper[0] == "+" && oper[1] == "-") {
-//       numArray[0] += numArray[1];
-//       oper[0] = oper[1];
-//       init();
-//     }
-//     else if(oper[0] == "-" && oper[1] == "+") {
-//       numArray[0] -= numArray[1];
-//       oper[0] = oper[1];
-//       init();
-//     }
-//     else if(oper[0] == "-" &&oper[1] == "-") {
-//       numArray[0] -= numArray[1];
-//       oper[0] = oper[1];
-//       init();
-//     }
-//     else if(oper[0] == "*") {
-//       numArray[0] *= numArray[1];
-//       oper[0] = oper[1];
-//       init();
-//     }
-//     else if(oper[0] == "/") {
-//       numArray[0] /= numArray[1];
-//       oper[0] = oper[1];
-//       init();
-//     }
+function initAc() {
+  numArray = [0];
+  oper = [];
+  iv.innerHTML = numArray[0];
+}
 
+function arithmetic () {
+  switch (oper[0]) {
+    case "+" :
+    numArray[0] += numArray[1];
+    init();
+    break;
+    case "-" :
+    numArray[0] -= numArray[1];
+    init();
+    break;
+    case "*" :
+    numArray[0] *= numArray[1];
+    init();
+    break;
+    case "/" :
+    numArray[0] /= numArray[1];
+    init();
+    break;
+  }
+}
+
+function operlator() {
 //     if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3){
 //       numArray[1] *= numArray[2];
 //       iv.innerHTML = numArray[2];
@@ -87,14 +82,9 @@ function inputNumber(inputValue) {
 //         equlOper();      
 //       }
 //     }
-//   }
+  }
 
-//   function initAc() {
-//       stringNum = "";
-//       numArray = [];
-//       oper = [];
-//       iv.innerHTML = 0;
-//   }
+
 
 //   function equlOper() {
 //     switch(oper[0]) {
@@ -126,27 +116,28 @@ function click(e){
   var inputValue = this.innerHTML;
 
   // 숫자받기
-  if(inputValue >= "0" && inputValue <= "9" || inputValue == ".") {
+  if(inputValue >= "0" && inputValue <= "9") {
     iv.innerHTML = inputNumber(inputValue);
   }
 
   // else if(inputValue == ".") {
-
+  //   iv.innerHTML = numArray.pop() + ".";
   // }
 
-  // else if(inputValue == "-" && numArray.length == 0) {
-  //   numArray[0] = num;
-  //   oper[0] = "-";
-  // }
+  // 숫자이외
 
-  // // 숫자이외
-  // else {
-  //   numArray.push(num);
-  //   inputOper(inputValue);
-  //   if(inputValue == "AC") {
-  //     initAc();
-  //     num = 0;
-  //   }
+  else if(inputValue == "-" && numArray.length == 0) {
+    oper[0] = "-";
+  }
+
+  else {
+    numArray.push(num);
+    inputOper(inputValue);
+
+    // if(inputValue == "AC") {
+    //   initAc();
+    // }
+
   //   else if(inputValue == "+/-") {
   //     if(num < 0) {
   //       num = Math.abs(num);
@@ -177,7 +168,7 @@ function click(e){
   //   else if(oper.length == 3) {
   //     operlator();
   //   }
-  //   }
+    }
     } 
   }
 )

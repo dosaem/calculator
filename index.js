@@ -1,174 +1,83 @@
-window.addEventListener('DOMContentLoaded', function() {
-  var cols = document.querySelectorAll('div.calculator-button > button'); 
-  Array.prototype.forEach.call(cols ,function(col){
-    col.addEventListener("click",click,false);
-});
+(function() {
+  var calculator = (function() {
+    var _view = null;
+    var numArray = [0];
+    var operArray = [];
 
-var iv = document.getElementById("ivalue");
-var numArray = [0];
-var oper = [];
-
-function inputNumber(inputValue) {
-  numArray[oper.length] = Number(String(numArray.pop()) + inputValue);
-  return numArray[oper.length];
-}
-
-function inputOper(inputValue) {
-    oper.push(inputValue);
-}
-
-function init() {
-  oper[0] = oper[1];
-  iv.innerHTML = numArray[0];
-  oper.pop();
-  numArray.pop();
-}
-
-function initAc() {
-  numArray = [0];
-  oper = [];
-  iv.innerHTML = numArray[0];
-}
-
-function arithmetic () {
-  switch (oper[0]) {
-    case "+" :
-    numArray[0] += numArray[1];
-    init();
-    break;
-    case "-" :
-    numArray[0] -= numArray[1];
-    init();
-    break;
-    case "*" :
-    numArray[0] *= numArray[1];
-    init();
-    break;
-    case "/" :
-    numArray[0] /= numArray[1];
-    init();
-    break;
-  }
-}
-
-function operlator() {
-//     if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3){
-//       numArray[1] *= numArray[2];
-//       iv.innerHTML = numArray[2];
-//       oper[1] = oper[2];
-//       init();
-//       if(oper[1] == "+" || oper[1] == "-") {
-//         operlator();       
-//       }
-//       else if(oper[1] == "*" || oper[1] == "/") {
-//         iv.innerHTML = numArray[1];
-//       }
-//       else if(oper[1] == "=") {
-//         equlOper();      
-//       }
-//     }
-//     else if((oper[0] == "+" || oper[0] == "-") && oper[1] == "/" && oper.length == 3) {
-//       numArray[1] /= numArray[2];
-//       iv.innerHTML = numArray[2];
-//       oper[1] = oper[2];
-//       init();
-//       if(oper[1] == "+" || oper[1] == "-") {
-//         operlator();       
-//       }
-//       else if(oper[1] == "*" || oper[1] == "/") {
-//         iv.innerHTML = numArray[1];
-//       }
-//       else if(oper[1] == "=") {
-//         equlOper();      
-//       }
-//     }
-  }
-
-
-
-//   function equlOper() {
-//     switch(oper[0]) {
-//       case "+" :
-//       num = numArray[0] + numArray[1];
-//       initAc();
-//       iv.innerHTML = num;
-//       break;
-//       case "-" :
-//       num = numArray[0] - numArray[1];
-//       initAc();
-//       iv.innerHTML = num;
-//       break;
-//       case "*" :
-//       num = numArray[0] * numArray[1];
-//       initAc();
-//       iv.innerHTML = num;
-//       break;
-//       case "/" :
-//       num = numArray[0] / numArray[1];
-//       initAc();
-//       iv.innerHTML = num;
-//       break;
-//     }
-//   }
-
-function click(e){
-  // 입력 받은 버튼 값
-  var inputValue = this.innerHTML;
-
-  // 숫자받기
-  if(inputValue >= "0" && inputValue <= "9") {
-    iv.innerHTML = inputNumber(inputValue);
-  }
-
-  // else if(inputValue == ".") {
-  //   iv.innerHTML = numArray.pop() + ".";
-  // }
-
-  // 숫자이외
-
-  else if(inputValue == "-" && numArray.length == 0) {
-    oper[0] = "-";
-  }
-
-  else {
-    numArray.push(num);
-    inputOper(inputValue);
-
-    // if(inputValue == "AC") {
-    //   initAc();
+    // function inputNumber(inputValue) {
+    //   numArray[oper.length] = Number(String(numArray.pop()) + inputValue);
+    //   return numArray[oper.length];
     // }
 
-  //   else if(inputValue == "+/-") {
-  //     if(num < 0) {
-  //       num = Math.abs(num);
-  //       iv.innerHTML = num;
-  //       oper.shift();
-  //       numArray.shift(); 
-  //     }
-  //     else {
-  //       num *= -1;
-  //       iv.innerHTML = num;
-  //       oper.shift();
-  //       numArray.shift(); 
-  //     }
-  //   }
-  //   else if(inputValue == "%") {
-  //       num /= 100;
-  //       iv.innerHTML = num;
-  //       oper.shift();
-  //       numArray.shift(); 
-
-  //   }
-  //   else if(oper.length == 2 && inputValue == "=") {
-  //     equlOper();
-  //   }
-  //   else if(oper.length == 2 && inputValue != "="){
-  //     operlator();
-  //   }
-  //   else if(oper.length == 3) {
-  //     operlator();
-  //   }
+    function _init(view) {
+      _view = view;
     }
-    } 
-  }
-)
+
+    function _handleInputNumber() {
+      var num = this.innerHTML;
+      var numStr = String(numArray.pop());
+      numArray[operArray.length] = Number(numStr + num);
+      _view.innerHTML = numArray[operArray.length];
+    }
+
+    function _getOperWeigth(oper) {
+      return oper === "+" || oper === "-" ? 0 : 1;
+    }
+
+    function _compareOper(oper1, oper2) {
+      if (_getOperWeigth(oper1) > _getOperWeigth(oper2)) {
+        return 1;
+      } else if (_getOperWeigth(oper1) == _getOperWeigth(oper2)) {
+        return 0;
+      }
+
+      return -1;
+    }
+
+    function _calculator(num2, num1, oper) {
+      switch (oper) {
+        case "+":
+          return num1 + num2;
+        case "-":
+          return num1 - num2;
+        case "*":
+          return num1 * num2;
+        case "/":
+          return num1 / num2;
+      }
+    }
+
+    function _handleInputOper() {
+      var lastOper = operArray[operArray.length - 1];
+      var currOper = this.innerHTML;
+      if (lastOper && _compareOper(lastOper, currOper) >= 0) {
+        numArray.push(
+          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
+        );
+      }
+
+      operArray.push(currOper);
+    }
+
+    return {
+      init: _init,
+      handleInputNumber: _handleInputNumber,
+      handleInputOper: _handleInputOper
+    };
+  })();
+
+  window.addEventListener("DOMContentLoaded", function() {
+    calculator.init(document.getElementById("ivalue"));
+
+    var cols = document.querySelectorAll("div.calculator-button > button");
+
+    Array.prototype.forEach.call(cols, function(col) {
+      if (col.dataset.numvalue) {
+        col.addEventListener("click", calculator.handleInputNumber, false);
+      } else if (col.dataset.opervalue) {
+        col.addEventListener("click", calculator.handleInputOper, false);
+      } else {
+      }
+    });
+  });
+})();

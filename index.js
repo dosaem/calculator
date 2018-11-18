@@ -4,20 +4,24 @@
     var numArray = [0];
     var operArray = [];
 
-    // function inputNumber(inputValue) {
-    //   numArray[oper.length] = Number(String(numArray.pop()) + inputValue);
-    //   return numArray[oper.length];
-    // }
-
     function _init(view) {
       _view = view;
     }
 
     function _handleInputNumber() {
       var num = this.innerHTML;
-      var numStr = String(numArray.pop());
-      numArray[operArray.length] = Number(numStr + num);
-      _view.innerHTML = numArray[operArray.length];
+
+      // 새로운 숫자 입력
+      // =>
+      if (numArray.length == operArray.length) {
+        numArray.push(Number(num));
+        _view.innerHTML = numArray[operArray.length];
+      } else {
+        // 합치는 경우
+        var numStr = String(numArray.pop());
+        numArray.push(Number(numStr + num));
+        _view.innerHTML = numArray[operArray.length];
+      }
     }
 
     function _getOperWeigth(oper) {

@@ -58,6 +58,15 @@
         numArray.push(
           _calculator(numArray.pop(), numArray.pop(), operArray.pop())
         );
+        _view.innerHTML = numArray[operArray.length];
+      } else if (currOper == "=") {
+        numArray.push(
+          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
+        );
+
+        operArray.pop();
+        console.log(operArray);
+        _view.innerHTML = numArray[operArray.length];
       }
 
       operArray.push(currOper);

@@ -15,13 +15,14 @@
       // =>
       if (numArray.length == operArray.length) {
         numArray.push(Number(num));
-        _view.innerHTML = numArray[operArray.length];
+        _newView();
       } else {
         // 합치는 경우
         var numStr = String(numArray.pop());
         numArray.push(Number(numStr + num));
-        _view.innerHTML = numArray[operArray.length];
+        _newView();
       }
+      console.log(numArray);
     }
 
     function _getOperWeigth(oper) {
@@ -51,25 +52,40 @@
       }
     }
 
+    function _newView() {
+      _view.innerHTML = numArray[operArray.length];
+    }
+
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
-      var currOper = this.innerHTML;
-      if (lastOper && _compareOper(lastOper, currOper) >= 0) {
-        numArray.push(
-          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
-        );
-        _view.innerHTML = numArray[operArray.length];
-      } else if (currOper == "=") {
-        numArray.push(
-          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
-        );
+      console.log(lastOper);
 
+      var currOper = this.innerHTML;
+      console.log(currOper);
+      if (lastOper && _compareOper(lastOper, currOper) >= 0) {
+        console.log(1);
+
+        numArray.push(
+          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
+        );
+        console.log(numArray);
+
+        _newView();
+        operArray.push(currOper);
+      } else if (currOper == "=") {
+        console.log(2);
+        numArray.push(
+          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
+        );
         operArray.pop();
-        console.log(operArray);
-        _view.innerHTML = numArray[operArray.length];
+        console.log(numArray);
+        _newView();
+      } else {
+        operArray.push(currOper);
       }
 
-      operArray.push(currOper);
+      //operArray.push(currOper);
+      console.log(operArray);
     }
 
     return {

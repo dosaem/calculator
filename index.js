@@ -12,8 +12,8 @@
       var num = this.innerHTML;
 
       // 새로운 숫자 입력
-      // =>
       if (numArray.length == operArray.length) {
+        console.log("hi");
         numArray.push(Number(num));
         _newView();
       } else {
@@ -22,7 +22,6 @@
         numArray.push(Number(numStr + num));
         _newView();
       }
-      console.log(numArray);
     }
 
     function _getOperWeigth(oper) {
@@ -52,40 +51,35 @@
       }
     }
 
+    function _numPush() {
+      numArray.push(
+        _calculator(numArray.pop(), numArray.pop(), operArray.pop())
+      );
+    }
+
     function _newView() {
       _view.innerHTML = numArray[operArray.length];
     }
 
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
-      console.log(lastOper);
-
       var currOper = this.innerHTML;
-      console.log(currOper);
-      if (lastOper && _compareOper(lastOper, currOper) >= 0) {
-        console.log(1);
 
-        numArray.push(
-          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
-        );
-        console.log(numArray);
-
+      if (
+        lastOper &&
+        currOper != "=" &&
+        _compareOper(lastOper, currOper) >= 0
+      ) {
+        _numPush();
         _newView();
         operArray.push(currOper);
       } else if (currOper == "=") {
-        console.log(2);
-        numArray.push(
-          _calculator(numArray.pop(), numArray.pop(), operArray.pop())
-        );
+        _numPush();
         operArray.pop();
-        console.log(numArray);
         _newView();
       } else {
         operArray.push(currOper);
       }
-
-      //operArray.push(currOper);
-      console.log(operArray);
     }
 
     return {

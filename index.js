@@ -64,7 +64,7 @@
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-
+      console.log(currOper);
       if (
         lastOper &&
         currOper != "=" &&
@@ -82,10 +82,22 @@
       }
     }
 
+    function _handleInputEtc() {
+      var etc = this.innerHTML;
+      if (etc == "AC") {
+        numArray = [0];
+        operArray = [];
+        _view.innerHTML = 0;
+        lastOper = null;
+        currOper = null;
+      }
+    }
+
     return {
       init: _init,
       handleInputNumber: _handleInputNumber,
-      handleInputOper: _handleInputOper
+      handleInputOper: _handleInputOper,
+      handleInputEtc: _handleInputEtc
     };
   })();
 
@@ -100,6 +112,7 @@
       } else if (col.dataset.opervalue) {
         col.addEventListener("click", calculator.handleInputOper, false);
       } else {
+        col.addEventListener("click", calculator.handleInputEtc, false);
       }
     });
   });

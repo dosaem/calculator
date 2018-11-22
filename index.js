@@ -90,6 +90,10 @@
         _view.innerHTML = 0;
         lastOper = null;
         currOper = null;
+      } else if (etc == "%") {
+        var percentView = numArray.pop() / 100;
+        numArray.push(percentView);
+        _view.innerHTML = percentView;
       }
     }
 

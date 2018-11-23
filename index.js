@@ -10,16 +10,16 @@
 
     function _handleInputNumber() {
       var num = this.innerHTML;
-
-      // 새로운 숫자 입력
       if (numArray.length == operArray.length) {
-        console.log("hi");
+        console.log(".1");
         numArray.push(Number(num));
         _newView();
       } else {
-        // 합치는 경우
         var numStr = String(numArray.pop());
         numArray.push(Number(numStr + num));
+        if (num == ".") {
+          numArray.push(String(numArray.pop() + num));
+        }
         _newView();
       }
     }
@@ -94,6 +94,8 @@
         var percentView = numArray.pop() / 100;
         numArray.push(percentView);
         _view.innerHTML = percentView;
+      } else if (etc == "+/-") {
+        numArray.pop();
       }
     }
 

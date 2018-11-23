@@ -11,7 +11,6 @@
     function _handleInputNumber() {
       var num = this.innerHTML;
       if (numArray.length == operArray.length) {
-        console.log(".1");
         numArray.push(Number(num));
         _newView();
       } else {
@@ -34,7 +33,6 @@
       } else if (_getOperWeigth(oper1) == _getOperWeigth(oper2)) {
         return 0;
       }
-
       return -1;
     }
 
@@ -64,7 +62,6 @@
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-      console.log(currOper);
       if (
         lastOper &&
         currOper != "=" &&
@@ -93,9 +90,16 @@
       } else if (etc == "%") {
         var percentView = numArray.pop() / 100;
         numArray.push(percentView);
-        _view.innerHTML = percentView;
+        _newView();
       } else if (etc == "+/-") {
-        numArray.pop();
+        var pm = numArray.pop();
+        if (pm < 0) {
+          numArray.push(Math.abs(pm));
+          _newView();
+        } else {
+          numArray.push((pm *= -1));
+          _newView();
+        }
       }
     }
 

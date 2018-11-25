@@ -62,6 +62,8 @@
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
+      console.log(numArray);
+      console.log(operArray);
       if (
         lastOper &&
         currOper != "=" &&
@@ -70,13 +72,33 @@
         _numPush();
         _newView();
         operArray.push(currOper);
+        console.log(numArray);
+        console.log(operArray);
+        if (operArray.length == 2) {
+          tempOper = operArray.pop();
+          _numPush();
+          _view.innerHTML = numArray[0];
+          operArray.push(tempOper);
+        }
+        console.log(1);
+      } else if (
+        lastOper &&
+        currOper != "=" &&
+        _compareOper(lastOper, currOper) == -1
+      ) {
+        operArray.push(currOper);
+        console.log(2);
       } else if (currOper == "=") {
         _numPush();
         operArray.pop();
         _newView();
+        console.log(3);
       } else {
         operArray.push(currOper);
+        console.log(4);
       }
+      console.log(numArray);
+      console.log(operArray);
     }
 
     function _handleInputEtc() {

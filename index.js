@@ -62,13 +62,13 @@
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-      console.log(operArray.length);
-      console.log(numArray.length);
       console.log(lastOper);
       console.log(currOper);
-
       if (numArray.length == operArray.length) {
+        var newNum = numArray.pop();
+        numArray.push(_calculator(newNum, newNum, currOper));
         lastOper = null;
+        operArray.pop();
       } else if (
         lastOper &&
         currOper != "=" &&
@@ -94,14 +94,27 @@
       ) {
         operArray.push(currOper);
       } else if (currOper == "=") {
-        _numPush();
-        if (operArray.length == numArray.length) {
-          operArray.pop();
-        }
-        if (numArray.length == 2 && operArray.length == 1 && currOper == "=") {
+        console.log("hi");
+        console.log(operArray);
+        console.log(numArray);
+        if (operArray.length == 0) {
+          _newView();
+        } else {
           _numPush();
+
+          if (operArray.length == numArray.length) {
+            operArray.pop();
+            console.log("hi");
+          }
+          if (
+            numArray.length == 2 &&
+            operArray.length == 1 &&
+            currOper == "="
+          ) {
+            _numPush();
+          }
+          _newView();
         }
-        _newView();
       } else {
         operArray.push(currOper);
       }

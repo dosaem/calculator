@@ -62,7 +62,14 @@
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-      if (
+      console.log(operArray.length);
+      console.log(numArray.length);
+      console.log(lastOper);
+      console.log(currOper);
+
+      if (numArray.length == operArray.length) {
+        lastOper = null;
+      } else if (
         lastOper &&
         currOper != "=" &&
         _compareOper(lastOper, currOper) >= 0

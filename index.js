@@ -59,16 +59,24 @@
       _view.innerHTML = numArray[operArray.length];
     }
 
+    function _saemOper() {
+      var newNum = numArray.pop();
+      numArray.push(_calculator(newNum, newNum, operArray.pop()));
+      lastOper = null;
+
+      operArray.pop();
+      console.log(numArray);
+      console.log(operArray);
+    }
+
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-      console.log(lastOper);
-      console.log(currOper);
+      // console.log(lastOper);
+      // console.log(currOper);
       if (numArray.length == operArray.length) {
-        var newNum = numArray.pop();
-        numArray.push(_calculator(newNum, newNum, currOper));
-        lastOper = null;
-        operArray.pop();
+        operArray.push(currOper);
+        _saemOper();
       } else if (
         lastOper &&
         currOper != "=" &&

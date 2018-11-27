@@ -59,24 +59,21 @@
       _view.innerHTML = numArray[operArray.length];
     }
 
-    function _saemOper() {
-      var newNum = numArray.pop();
-      numArray.push(_calculator(newNum, newNum, operArray.pop()));
-      lastOper = null;
-
-      operArray.pop();
-      console.log(numArray);
-      console.log(operArray);
-    }
-
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-      // console.log(lastOper);
-      // console.log(currOper);
+
       if (numArray.length == operArray.length) {
-        operArray.push(currOper);
-        _saemOper();
+        if (currOper == "=") {
+          var newNum = numArray.pop();
+          numArray.push(_calculator(newNum, newNum, operArray.pop()));
+          lastOper = null;
+          operArray.pop();
+          _newView();
+        } else {
+          operArray.push(currOper);
+          operArray.shift();
+        }
       } else if (
         lastOper &&
         currOper != "=" &&
@@ -102,18 +99,10 @@
       ) {
         operArray.push(currOper);
       } else if (currOper == "=") {
-        console.log("hi");
-        console.log(operArray);
-        console.log(numArray);
         if (operArray.length == 0) {
           _newView();
         } else {
           _numPush();
-
-          if (operArray.length == numArray.length) {
-            operArray.pop();
-            console.log("hi");
-          }
           if (
             numArray.length == 2 &&
             operArray.length == 1 &&

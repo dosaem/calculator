@@ -12,15 +12,14 @@
       var num = this.innerHTML;
       if (numArray.length == operArray.length) {
         numArray.push(Number(num));
-        _newView();
       } else {
         var numStr = String(numArray.pop());
         numArray.push(Number(numStr + num));
         if (num == ".") {
           numArray.push(String(numArray.pop() + num));
         }
-        _newView();
       }
+      _newView();
     }
 
     function _getOperWeigth(oper) {
@@ -122,23 +121,14 @@
       if (etc == "AC") {
         numArray = [0];
         operArray = [];
-        _view.innerHTML = 0;
-        lastOper = null;
-        currOper = null;
       } else if (etc == "%") {
         var percentView = numArray.pop() / 100;
         numArray.push(percentView);
-        _newView();
       } else if (etc == "+/-") {
         var pm = numArray.pop();
-        if (pm < 0) {
-          numArray.push(Math.abs(pm));
-          _newView();
-        } else {
-          numArray.push((pm *= -1));
-          _newView();
-        }
+        numArray.push(pm * -1);
       }
+      _newView();
     }
 
     return {

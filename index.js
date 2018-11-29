@@ -58,21 +58,24 @@
       _view.innerHTML = numArray[operArray.length];
     }
 
+    function _saemLength(lastOper, currOper) {
+      if (currOper == "=") {
+        var newNum = numArray.pop();
+        numArray.push(_calculator(newNum, newNum, operArray.pop()));
+        lastOper = null;
+        operArray.pop();
+        _newView();
+      } else {
+        operArray.push(currOper);
+        operArray.shift();
+      }
+    }
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
 
       if (numArray.length == operArray.length) {
-        if (currOper == "=") {
-          var newNum = numArray.pop();
-          numArray.push(_calculator(newNum, newNum, operArray.pop()));
-          lastOper = null;
-          operArray.pop();
-          _newView();
-        } else {
-          operArray.push(currOper);
-          operArray.shift();
-        }
+        _saemLength(lastOper, currOper);
       } else if (
         lastOper &&
         currOper != "=" &&

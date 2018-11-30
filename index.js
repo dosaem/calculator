@@ -70,6 +70,19 @@
         operArray.shift();
       }
     }
+
+    function _equalOper() {
+      if (operArray.length == 0) {
+        _newView();
+      } else {
+        _numPush();
+        if (numArray.length == 2 && operArray.length == 1 && currOper == "=") {
+          _numPush();
+        }
+        _newView();
+      }
+    }
+
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
@@ -101,19 +114,7 @@
       ) {
         operArray.push(currOper);
       } else if (currOper == "=") {
-        if (operArray.length == 0) {
-          _newView();
-        } else {
-          _numPush();
-          if (
-            numArray.length == 2 &&
-            operArray.length == 1 &&
-            currOper == "="
-          ) {
-            _numPush();
-          }
-          _newView();
-        }
+        _equalOper();
       } else {
         operArray.push(currOper);
       }

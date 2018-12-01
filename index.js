@@ -3,6 +3,8 @@
     var _view = null;
     var numArray = [0];
     var operArray = [];
+    var numArray2 = [];
+    var operArray2 = [];
 
     function _init(view) {
       _view = view;
@@ -62,24 +64,74 @@
       if (currOper == "=") {
         var newNum = numArray.pop();
         numArray.push(_calculator(newNum, newNum, operArray.pop()));
-        lastOper = null;
-        operArray.pop();
-        _newView();
-      } else {
-        operArray.push(currOper);
-        operArray.shift();
-      }
-    }
 
-    function _equalOper() {
-      if (operArray.length == 0) {
-        _newView();
-      } else {
-        _numPush();
-        if (numArray.length == 2 && operArray.length == 1 && currOper == "=") {
+        if (numArray.length == 2 && operArray.length == 1) {
           _numPush();
         }
         _newView();
+      } else {
+        if (numArray.length == 1) {
+          if (numArray2.length > 0) {
+            numArray = numArray2.slice();
+            operArray = operArray2.slice();
+            _newView();
+          } else {
+            operArray.push(currOper);
+            operArray.shift();
+          }
+          numArray2 = [];
+          operArray2 = [];
+        } else {
+          operArray.pop();
+          operArray.push(currOper);
+          _tempView(numArray, operArray);
+        }
+      }
+    }
+
+    function _noEqualOper(currOper) {
+      numArray2 = numArray.slice();
+      operArray2 = operArray.slice();
+      _numPush();
+      _newView();
+      operArray.push(currOper);
+
+      if (operArray.length == 2) {
+        tempOper = operArray.pop();
+        if (_getOperWeigth(tempOper) == 0) {
+          _numPush();
+          _view.innerHTML = numArray[0];
+          operArray.push(tempOper);
+        } else {
+          operArray.push(tempOper);
+        }
+      }
+    }
+
+    function _equalOper(currOper) {
+      if (operArray.length == 0) return _newView();
+
+      _numPush();
+
+      if (numArray.length == 2 && operArray.length == 1 && currOper == "=") {
+        _numPush();
+      }
+      _newView();
+    }
+
+    function _tempView() {
+      var newNumArray = numArray.slice();
+      var newOperArray = operArray.slice();
+      tempOper = newOperArray.pop();
+      if (_getOperWeigth(tempOper) == 0) {
+        newNumArray.push(
+          _calculator(newNumArray.pop(), newNumArray.pop(), newOperArray.pop())
+        );
+        _view.innerHTML = newNumArray[0];
+        newOperArray.push(tempOper);
+      } else {
+        _view.innerHTML = newNumArray[1];
+        newOperArray.push(tempOper);
       }
     }
 
@@ -94,19 +146,7 @@
         currOper != "=" &&
         _compareOper(lastOper, currOper) >= 0
       ) {
-        _numPush();
-        _newView();
-        operArray.push(currOper);
-        if (operArray.length == 2) {
-          tempOper = operArray.pop();
-          if (_getOperWeigth(tempOper) == 0) {
-            _numPush();
-            _view.innerHTML = numArray[0];
-            operArray.push(tempOper);
-          } else {
-            operArray.push(tempOper);
-          }
-        }
+        _noEqualOper(currOper);
       } else if (
         lastOper &&
         currOper != "=" &&

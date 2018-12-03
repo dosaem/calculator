@@ -60,7 +60,7 @@
       _view.innerHTML = numArray[operArray.length];
     }
 
-    function _saemLength(lastOper, currOper) {
+    function _saemLength(currOper) {
       if (currOper == "=") {
         var newNum = numArray.pop();
         numArray.push(_calculator(newNum, newNum, operArray.pop()));
@@ -128,11 +128,10 @@
           _calculator(newNumArray.pop(), newNumArray.pop(), newOperArray.pop())
         );
         _view.innerHTML = newNumArray[0];
-        newOperArray.push(tempOper);
       } else {
         _view.innerHTML = newNumArray[1];
-        newOperArray.push(tempOper);
       }
+      newOperArray.push(tempOper);
     }
 
     function _handleInputOper() {

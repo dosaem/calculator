@@ -139,7 +139,7 @@
       var currOper = this.innerHTML;
 
       if (numArray.length == operArray.length) {
-        _saemLength(lastOper, currOper);
+        _saemLength(currOper);
       } else if (
         lastOper &&
         currOper != "=" &&

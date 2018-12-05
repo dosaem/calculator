@@ -1,184 +1,200 @@
-window.addEventListener('DOMContentLoaded', function() {
-  var cols = document.querySelectorAll('div.calculator-button > button'); 
- 
-  Array.prototype.forEach.call(cols ,function(col){
-    col.addEventListener("click",click,false);
-});
+(function() {
+  var calculator = (function() {
+    var _view = null;
+    var numArray = [0];
+    var operArray = [];
+    var numArray2 = [];
+    var operArray2 = [];
 
-var iv = document.getElementById("ivalue");
-var stringNum = "";
-var numArray = [];
-var oper = [];
-var num = 0;
-
-function inputNumber(inputValue) {
-  stringNum += inputValue;
-  num = Number(stringNum);
-  iv.innerHTML = num;
-}
-
-function inputOper(inputValue) {
-  stringNum = "";
-  oper.push(inputValue);
-}
-
-function init() {
-  iv.innerHTML = numArray[0];
-  oper.pop();
-  numArray.pop();
-}
-
-function operlator() {
-    if(oper[0] == "+" && oper[1] == "+"){
-      numArray[0] += numArray[1];
-      init();
-    }
-    else if(oper[0] == "+" && oper[1] == "-") {
-      numArray[0] += numArray[1];
-      oper[0] = oper[1];
-      init();
-    }
-    else if(oper[0] == "-" && oper[1] == "+") {
-      numArray[0] -= numArray[1];
-      oper[0] = oper[1];
-      init();
-    }
-    else if(oper[0] == "-" &&oper[1] == "-") {
-      numArray[0] -= numArray[1];
-      init();
-    }
-    else if(oper[0] == "*") {
-      numArray[0] *= numArray[1];
-      oper[0] = oper[1];
-      init();
-    }
-    else if(oper[0] == "/") {
-      numArray[0] /= numArray[1];
-      oper[0] = oper[1];
-      init();
+    function _init(view) {
+      _view = view;
     }
 
-    if((oper[0] == "+" || oper[0] == "-") && oper[1] == "*" && oper.length == 3){
-      numArray[1] *= numArray[2];
-      iv.innerHTML = numArray[2];
-      oper[1] = oper[2];
-      init();
-      if(oper[1] == "+" || oper[1] == "-") {
-        operlator();       
+    function _handleInputNumber() {
+      var num = this.innerHTML;
+      if (numArray.length == operArray.length) {
+        numArray.push(Number(num));
+      } else {
+        var numStr = String(numArray.pop());
+        numArray.push(Number(numStr + num));
+        if (num == ".") {
+          numArray.push(String(numArray.pop() + num));
+        }
       }
-      else if(oper[1] == "*" || oper[1] == "/") {
-        iv.innerHTML = numArray[1];
+      _newView();
+    }
+
+    function _getOperWeigth(oper) {
+      return oper === "+" || oper === "-" ? 0 : 1;
+    }
+
+    function _compareOper(oper1, oper2) {
+      if (_getOperWeigth(oper1) > _getOperWeigth(oper2)) {
+        return 1;
+      } else if (_getOperWeigth(oper1) == _getOperWeigth(oper2)) {
+        return 0;
       }
-      else if(oper[1] == "=") {
-        equlOper();      
+      return -1;
+    }
+
+    function _calculator(num2, num1, oper) {
+      switch (oper) {
+        case "+":
+          return num1 + num2;
+        case "-":
+          return num1 - num2;
+        case "*":
+          return num1 * num2;
+        case "/":
+          return num1 / num2;
       }
     }
-    else if((oper[0] == "+" || oper[0] == "-") && oper[1] == "/" && oper.length == 3) {
-      numArray[1] /= numArray[2];
-      iv.innerHTML = numArray[2];
-      oper[1] = oper[2];
-      init();
-      if(oper[1] == "+" || oper[1] == "-") {
-        operlator();       
-      }
-      else if(oper[1] == "*" || oper[1] == "/") {
-        iv.innerHTML = numArray[1];
-      }
-      else if(oper[1] == "=") {
-        equlOper();      
-      }
+
+    function _numPush() {
+      numArray.push(
+        _calculator(numArray.pop(), numArray.pop(), operArray.pop())
+      );
     }
-  }
 
-  function initAc() {
-      stringNum = "";
-      numArray = [];
-      oper = [];
-      iv.innerHTML = 0;
-  }
-
-  function equlOper() {
-    switch(oper[0]) {
-      case "+" :
-      num = numArray[0] + numArray[1];
-      initAc();
-      iv.innerHTML = num;
-      break;
-      case "-" :
-      num = numArray[0] - numArray[1];
-      initAc();
-      iv.innerHTML = num;
-      break;
-      case "*" :
-      num = numArray[0] * numArray[1];
-      initAc();
-      iv.innerHTML = num;
-      break;
-      case "/" :
-      num = numArray[0] / numArray[1];
-      initAc();
-      iv.innerHTML = num;
-      break;
+    function _newView() {
+      _view.innerHTML = numArray[operArray.length];
     }
-  }
 
-function click(e){
-  // 입력 받은 버튼 값
-  var inputValue = this.innerHTML;
+    function _saemLength(currOper) {
+      if (currOper == "=") {
+        var newNum = numArray.pop();
+        numArray.push(_calculator(newNum, newNum, operArray.pop()));
 
-  // 숫자받기
-  if(inputValue >= "0" && inputValue <= "9" || inputValue == ".") {
-    inputNumber(inputValue);
-  }
-
-  else if(inputValue == "-" && numArray.length == 0) {
-    numArray[0] = num;
-    oper[0] = "-";
-    console.log(numArray);
-    console.log(oper);
-  }
-
-  // 숫자이외
-  else {
-    numArray.push(num);
-    inputOper(inputValue);
-    console.log(numArray);
-    console.log(oper);
-    if(inputValue == "AC") {
-      initAc();
-      num = 0;
-    }
-    else if(inputValue == "+/-") {
-      if(num < 0) {
-        num = Math.abs(num);
-        iv.innerHTML = num;
-        oper.shift();
-        numArray.shift(); 
-      }
-      else {
-        num *= -1;
-        iv.innerHTML = num;
-        oper.shift();
-        numArray.shift(); 
+        if (numArray.length == 2 && operArray.length == 1) {
+          _numPush();
+        }
+        _newView();
+      } else {
+        if (numArray.length == 1) {
+          if (numArray2.length > 0) {
+            numArray = numArray2.slice();
+            operArray = operArray2.slice();
+            _newView();
+          } else {
+            operArray.push(currOper);
+            operArray.shift();
+          }
+          numArray2 = [];
+          operArray2 = [];
+        } else {
+          operArray.pop();
+          operArray.push(currOper);
+          _tempView(numArray, operArray);
+        }
       }
     }
-    else if(inputValue == "%") {
-        num /= 100;
-        iv.innerHTML = num;
-        oper.shift();
-        numArray.shift(); 
 
+    function _noEqualOper(currOper) {
+      numArray2 = numArray.slice();
+      operArray2 = operArray.slice();
+      _numPush();
+      _newView();
+      operArray.push(currOper);
+
+      if (operArray.length == 2) {
+        tempOper = operArray.pop();
+        if (_getOperWeigth(tempOper) == 0) {
+          _numPush();
+          _view.innerHTML = numArray[0];
+          operArray.push(tempOper);
+        } else {
+          operArray.push(tempOper);
+        }
+      }
     }
-    else if(oper.length == 2 && inputValue == "=") {
-      equlOper();
+
+    function _equalOper(currOper) {
+      if (operArray.length == 0) return _newView();
+
+      _numPush();
+
+      if (numArray.length == 2 && operArray.length == 1 && currOper == "=") {
+        _numPush();
+      }
+      _newView();
     }
-    else if(oper.length == 2 && inputValue != "="){
-      operlator();
+
+    function _tempView() {
+      var newNumArray = numArray.slice();
+      var newOperArray = operArray.slice();
+      tempOper = newOperArray.pop();
+      if (_getOperWeigth(tempOper) == 0) {
+        newNumArray.push(
+          _calculator(newNumArray.pop(), newNumArray.pop(), newOperArray.pop())
+        );
+        _view.innerHTML = newNumArray[0];
+      } else {
+        _view.innerHTML = newNumArray[1];
+      }
+      newOperArray.push(tempOper);
     }
-    else if(oper.length == 3) {
-      operlator();
+
+    function _handleInputOper() {
+      var lastOper = operArray[operArray.length - 1];
+      var currOper = this.innerHTML;
+
+      if (numArray.length == operArray.length) {
+        _saemLength(currOper);
+      } else if (
+        lastOper &&
+        currOper != "=" &&
+        _compareOper(lastOper, currOper) >= 0
+      ) {
+        _noEqualOper(currOper);
+      } else if (
+        lastOper &&
+        currOper != "=" &&
+        _compareOper(lastOper, currOper) == -1
+      ) {
+        operArray.push(currOper);
+      } else if (currOper == "=") {
+        _equalOper();
+      } else {
+        operArray.push(currOper);
+      }
     }
+
+    function _handleInputEtc() {
+      var etc = this.innerHTML;
+      if (etc == "AC") {
+        numArray = [0];
+        operArray = [];
+      } else if (etc == "%") {
+        var percentView = numArray.pop() / 100;
+        numArray.push(percentView);
+      } else if (etc == "+/-") {
+        var pm = numArray.pop();
+        numArray.push(pm * -1);
+      }
+      _newView();
     }
-    } 
-  }
-)
+
+    return {
+      init: _init,
+      handleInputNumber: _handleInputNumber,
+      handleInputOper: _handleInputOper,
+      handleInputEtc: _handleInputEtc
+    };
+  })();
+
+  window.addEventListener("DOMContentLoaded", function() {
+    calculator.init(document.getElementById("ivalue"));
+
+    var cols = document.querySelectorAll("div.calculator-button > button");
+
+    Array.prototype.forEach.call(cols, function(col) {
+      if (col.dataset.numvalue) {
+        col.addEventListener("click", calculator.handleInputNumber, false);
+      } else if (col.dataset.opervalue) {
+        col.addEventListener("click", calculator.handleInputOper, false);
+      } else {
+        col.addEventListener("click", calculator.handleInputEtc, false);
+      }
+    });
+  });
+})();

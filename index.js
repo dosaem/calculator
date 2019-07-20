@@ -5,6 +5,7 @@
     var operArray = [];
     var numArray2 = [];
     var operArray2 = [];
+    var equal = null;
 
     function _init(view) {
       _view = view;
@@ -12,6 +13,11 @@
 
     function _handleInputNumber() {
       var num = this.innerHTML;
+      if (equal == "=") {
+        console.log("hi");
+        console.log(numArray);
+        numArray.pop();
+      }
       if (numArray.length == operArray.length) {
         numArray.push(Number(num));
       } else {
@@ -61,6 +67,7 @@
     }
 
     function _saemLength(currOper) {
+      console.log("hi");
       if (currOper == "=") {
         var newNum = numArray.pop();
         numArray.push(_calculator(newNum, newNum, operArray.pop()));
@@ -137,7 +144,8 @@
     function _handleInputOper() {
       var lastOper = operArray[operArray.length - 1];
       var currOper = this.innerHTML;
-
+      equal = currOper;
+      console.log(equal);
       if (numArray.length == operArray.length) {
         _saemLength(currOper);
       } else if (
@@ -157,6 +165,9 @@
       } else {
         operArray.push(currOper);
       }
+      console.log("기호입력");
+      console.log(lastOper);
+      console.log(currOper);
     }
 
     function _handleInputEtc() {
